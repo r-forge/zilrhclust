@@ -1,0 +1,26 @@
+Package: ziLRhClust
+Type: Package
+Title: Hierarchical Clustering based on log-likelihood ratio for zero-inflated data
+Version: 0.1
+Date: 2016-04-20
+Author: Ghislain Durif <ghislain.durif@univ-lyon1.fr>,
+    Franck Picard <franck.picard@univ-lyon1.fr>
+Maintainer: Ghislain Durif <ghislain.durif@univ-lyon1.fr>
+Description: Algorithm to process hierarchical clustering on individuals
+    (from a matrix individuals x variables). The dissimilarity used
+    in the observation space is the log-likelihood ratio, i.e.
+    D(i,j) = log f(Y_i) + log f(Y_j) - log f(Y_i U Y_j)
+    where Y_i is the vector of observations from individual i.
+    The statistical model defining the considered likelihood is
+    standard Gaussian or Zero-Inflated Gaussian (i.e. a Gaussian-Bernoulli
+    mixture). The agglomeration method is also the log-likelihood ratio,
+    however between clusters in this case.
+License: GPL (>= 2)
+Imports:
+    Rcpp (>= 0.12.3),
+    RcppEigen (>= 0.3.2.5.0)
+LinkingTo: Rcpp, RcppEigen
+Depends:
+    gplots,
+    RColorBrewer
+RoxygenNote: 5.0.1
