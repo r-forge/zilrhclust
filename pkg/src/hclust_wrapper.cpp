@@ -21,6 +21,7 @@
 #include <Rcpp.h>
 #include <RcppEigen.h>
 #include "hclustZI.h"
+#include "order.h"
 
 
 using namespace Rcpp;
@@ -30,6 +31,7 @@ using namespace Rcpp;
 using Eigen::Map;                       // 'maps' rather than copies
 using Eigen::MatrixXd;                  // variable size matrix, double precision
 using Eigen::VectorXd;                  // variable size vector, double precision
+using Eigen::MatrixXi;
 using Eigen::VectorXi;
 
 // INPUT
@@ -41,7 +43,7 @@ using Eigen::VectorXi;
 #define _iorder(i) iorder(i-1)
 
 // [[Rcpp::export]]
-Rcpp::List Cpp_hclust(Map<VectorXd> X, int n, int p, bool ZI) {
+Rcpp::List Cpp_hclust(Map<VectorXd> X, int n, int p, bool ZI, bool reorder) {
 
     int nbCluster=1; //will be one in the future
 
@@ -85,7 +87,7 @@ Rcpp::List Cpp_hclust(Map<VectorXd> X, int n, int p, bool ZI) {
 
     VectorXd height = Map<VectorXd>( arrayHeight, myClust.getDim() - 1);
 
-    MatrixXd merge( myClust.getDim()-1, 2 );
+    MatrixXi merge( myClust.getDim()-1, 2 );
     merge.setZero();
 
     for(int i=0; i<myClust.getDim()-1; i++) {
@@ -97,33 +99,15 @@ Rcpp::List Cpp_hclust(Map<VectorXd> X, int n, int p, bool ZI) {
     //----- order -----//
     VectorXi iorder( myClust.getDim() );
     iorder.setZero();
-
-
-    // cf hclust.f in stats pkg
     int N = myClust.getDim();
-    _iorder(1) = mergeA(N-1);
-    _iorder(2) = mergeB(N-1);
-    int loc = 2;
-    for(int i=N-2; i>0; i--) {
-        for(int j=1; j<loc+1; j++) {
-            if(_iorder(j) == i) {
-                _iorder(j) = mergeA(i);
-                if(j == loc) {
-                    loc=loc+1;
-                    _iorder(loc) = mergeB(i);
-                } else {
-                    loc=loc+1;
-                    for(int k=loc; k>j+1; k--) {
-                        _iorder(k) = _iorder(k-1);
-                    }
-                    _iorder(j+1) = mergeB(i);
-                }
-            }
-        }
+
+    // order?
+    order(merge, iorder, N);
+
+    // reorder
+    if(reorder) {
+        reOrder(indivDist, merge, iorder, N);
     }
-
-
-    iorder.array() = (-1) * iorder.array();
 
 
 

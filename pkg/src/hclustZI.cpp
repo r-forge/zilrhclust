@@ -292,11 +292,11 @@ double hclustZI::distance(int nA, int n0A, int n1A, double mA, double vA, double
 double hclustZI::loglike(int n, int n0, int n1, double v, double alpha) {
     double res = 0;
     if(alpha == 0) {
-        res = (-n1) * log(sqrt(v)) - n1 * log(sqrt(2*pi)) - ( (double) n1 / (double) 2);
+        res = (-n1) * mylog(sqrt(v)) - n1 * log(sqrt(2*pi)) - ( (double) n1 / (double) 2);
     } else if(alpha == 1) {
         res = 0;
     } else {
-        res = n1 * log(1-alpha) + n0 * log(alpha) - n1 * log(sqrt(v)) - n1 * log(sqrt(2*pi)) - ( (double) n1 / (double) 2);
+        res = n1 * mylog(1-alpha) + n0 * mylog(alpha) - n1 * mylog(sqrt(v)) - n1 * log(sqrt(2*pi)) - ( (double) n1 / (double) 2);
     }
     return(res);
 }

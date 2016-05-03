@@ -50,6 +50,8 @@
 #'@param X matrix n x p with observations (i.e. individuals) in rows and variables in columns
 #'@param ZI boolean, indicating whether using zero-inflated Gaussian model (if TRUE) or
 #'just gaussian model (if FALSE), default is TRUE
+#'@param reorder boolean, indicating whether individuals should be reorder or not
+#'(for heatmap aesthetic), if TRUE, use a re-implementation of \code{\link[gclus]{reorder.hclust}}
 #'
 #'@return an object of type hclust, see \code{\link[stats]{hclust}}
 #'\item{diss}{the n x n dissimilarity matrix between individuals}
@@ -62,7 +64,7 @@
 #### R wrapper to return object understandable by dendrogram function
 
 #' @export
-hClust_llr <- function(X, ZI=TRUE) {
+hClust_llr <- function(X, ZI=TRUE, reorder=TRUE) {
 
     X = as.matrix(X)
     X = apply(X, c(1,2), as.double)
@@ -71,7 +73,7 @@ hClust_llr <- function(X, ZI=TRUE) {
 
     Xvect = as.vector(t(X))
 
-    res = Cpp_hclust(Xvect, n, p, ZI)
+    res = Cpp_hclust(Xvect, n, p, ZI, reorder)
 
     ### return
     rlabels = NULL

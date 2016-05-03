@@ -287,9 +287,18 @@ hclust::~hclust() {
 double hclust::distance(int nA, double mA, double vA, int nB, double mB, double vB) {
     double ybar    = (nA*mA+nB*mB) / (nA+nB);
     double varpool =  (  nB*vB + nA*vA + nB*(mB-ybar)*(mB-ybar) + nA*(mA-ybar)*(mA-ybar) ) / (nB+nA);
-    double res = (nA+nB) * log(sqrt(varpool)) - nA*log(sqrt(vA)) - nB*log(sqrt(vB));
+    double res = (nA+nB) * mylog(sqrt(varpool)) - nA*mylog(sqrt(vA)) - nB*mylog(sqrt(vB));
     if(abs(res) < 1E-16) {
         res = 0;
     }
     return(res);
+}
+
+// log with test on zeros
+double mylog(double x) {
+    if(abs(x) < 1E-16) {
+        return(-40);
+    } else {
+        return(log(x));
+    }
 }

@@ -8,8 +8,8 @@
 using namespace Rcpp;
 
 // Cpp_hclust
-Rcpp::List Cpp_hclust(Map<VectorXd> X, int n, int p, bool ZI);
-RcppExport SEXP ziLRhClust_Cpp_hclust(SEXP XSEXP, SEXP nSEXP, SEXP pSEXP, SEXP ZISEXP) {
+Rcpp::List Cpp_hclust(Map<VectorXd> X, int n, int p, bool ZI, bool reorder);
+RcppExport SEXP ziLRhClust_Cpp_hclust(SEXP XSEXP, SEXP nSEXP, SEXP pSEXP, SEXP ZISEXP, SEXP reorderSEXP) {
 BEGIN_RCPP
     Rcpp::RObject __result;
     Rcpp::RNGScope __rngScope;
@@ -17,7 +17,8 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< int >::type n(nSEXP);
     Rcpp::traits::input_parameter< int >::type p(pSEXP);
     Rcpp::traits::input_parameter< bool >::type ZI(ZISEXP);
-    __result = Rcpp::wrap(Cpp_hclust(X, n, p, ZI));
+    Rcpp::traits::input_parameter< bool >::type reorder(reorderSEXP);
+    __result = Rcpp::wrap(Cpp_hclust(X, n, p, ZI, reorder));
     return __result;
 END_RCPP
 }

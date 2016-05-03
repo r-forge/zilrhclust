@@ -1,7 +1,7 @@
 Package: ziLRhClust
 Type: Package
-Title: Hierarchical Clustering based on log-likelihood ratio for zero-inflated data
-Version: 0.1
+Title: Hierarchical Clustering Based on Log-Likelihood Ratio for Zero-Inflated Data
+Version: 0.2
 Date: 2016-04-20
 Author: Ghislain Durif <ghislain.durif@univ-lyon1.fr>,
     Franck Picard <franck.picard@univ-lyon1.fr>

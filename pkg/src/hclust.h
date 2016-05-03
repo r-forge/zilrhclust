@@ -47,6 +47,8 @@ class hclust : public hclustOriginal {
         double distance(int nA, double mA, double vA, int nB, double mB, double vB);
         ~hclust();
 };
+
+double mylog(double x);
 #endif
 
 

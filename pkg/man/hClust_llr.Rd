@@ -4,13 +4,16 @@
 \alias{hClust_llr}
 \title{Hierarchical Clustering based on log-likelihood ratio}
 \usage{
-hClust_llr(X, ZI = TRUE)
+hClust_llr(X, ZI = TRUE, reorder = TRUE)
 }
 \arguments{
 \item{X}{matrix n x p with observations (i.e. individuals) in rows and variables in columns}
 
 \item{ZI}{boolean, indicating whether using zero-inflated Gaussian model (if TRUE) or
 just gaussian model (if FALSE), default is TRUE}
+
+\item{reorder}{boolean, indicating whether individuals should be reorder or not
+(for heatmap aesthetic), if TRUE, use a re-implementation of \code{\link[gclus]{reorder.hclust}}}
 }
 \value{
 an object of type hclust, see \code{\link[stats]{hclust}}
